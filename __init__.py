@@ -688,6 +688,7 @@ class SpotifySkill(CommonPlaySkill):
         """
         data = self.spotify.search(podcast, type='show')
         if data and data['shows']['items']:
+            self.log.info(data['shows']['items'])
             best = data['shows']['items'][0]['name'].lower()
             confidence = best_confidence(best, podcast)
             return (confidence, {'data': data, 'type': 'show'})
@@ -1054,9 +1055,14 @@ class SpotifySkill(CommonPlaySkill):
                 self.spotify_play(dev['id'], uris=uris)
             elif data_type == 'show':
                 (show, uri) = get_show_info(data)
+                total_episodes = data['shows']['items'][0]['total_episodes']
+                episodes = self.spotify.show_episodes(data['shows']['items'][0]['uri'], 1, 0)
+                self.log.info(episodes['items'][0])
+                uri = episodes['items'][0]['uri']
+                self.log.info(uri)
                 self.speak_dialog('ListeningToPodcast', data={'show': show})
                 time.sleep(2)
-                self.spotify_play(dev['id'], context_uri=uri)
+                self.spotify_play(dev['id'], uris=[uri], context_uri=None)
             else:
                 self.log.error('wrong data_type')
                 raise ValueError("Invalid type")
