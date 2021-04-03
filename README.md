@@ -2,8 +2,7 @@
 
 **Spotify has disabled my API access for the skill, it was violating their Terms of Service by enabling voice control. I must have missed this back in 2017 when I created the skill.**
 
-To use this skill currently you will need to create your own "application using
-https://developer.spotify.com". See instructions under the heading "Personal access token"
+To use this skill currently you will need to create your own application using [The Spotify developer dashboard](https://developer.spotify.com/dashboard/). See instructions below under Personal Access Token.
 .
 Listen to music from your Spotify Premium music account
 
@@ -18,12 +17,24 @@ So play DJ on your phone while listening on Mycroft!
 ### Authorization:
 This Skill uses two different methods of authentication. Both need to be filled in correctly for the **Skill** to function correctly.
 
-#### API connection to your Spotify account
+#### Personal Access Token
+
+##### Creating access token
+From the [Spotify developer dashboard](https://developer.spotify.com/dashboard/)
+
+1. Click "CREATE AN APP"
+1. Fill out the create application form
+1. Click on the new app and choose EDIT SETTINGS
+1. Under Redirect URIs add `https://localhost:8888`
+
+More info can be found [here](https://developer.spotify.com/documentation/general/guides/app-settings/).
+
+##### Connecting spotify skill
 After installing `mycroft-spotify`, from the mycroft-core folder run the auth.py script in the mycroft-spotify folder
 
 ```
-source venv-activate-sh
-python skills/mycroft-spotify/auth.py
+source venv-activate.sh
+python /opt/mycroft/skills/mycroft-spotify.forslund/auth.py
 ```
 
 The script will try to guide you through connecting a developer account to the skill and store the credentials locally.
