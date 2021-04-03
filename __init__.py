@@ -286,7 +286,14 @@ class SpotifySkill(CommonPlaySkill):
         return spotify
 
     def load_credentials(self):
-        """Retrieve credentials from the backend and connect to Spotify."""
+        """Retrieve credentials and connect to spotify.
+
+        This will load local credentials if available otherwise fetching
+        remote settings from mycroft backend will be attempted.
+
+        NOTE: the remote fetching is only a preparation for the future and
+        will always fail at the moment.
+        """
         self.spotify = self.load_local_creds() or self.load_remote_creds()
         if self.spotify:
             # Spotfy connection worked, prepare for usage
